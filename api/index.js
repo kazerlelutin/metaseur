@@ -8,6 +8,10 @@ export default async function meta(req, res) {
   const dom = new JSDOM(data)
   const doc = dom.window.document
 
+  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
+  res.setHeader('Content-Type', 'application/json')
+  res.setHeader('Access-Control-Allow-Origin', '*')
+
   const meta = {
     title: doc.querySelector('title').textContent,
     description: doc.querySelector('meta[name="description"]')?.content || '',
